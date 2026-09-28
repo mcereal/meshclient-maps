@@ -25,4 +25,5 @@ make build REGION=<id>             # needs Docker running
 - **The catalog is derived, never edited**: rebuilt from every sidecar in the bucket plus regions.toml.
 - **R2 credentials are env vars only** (`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`).
   Never write them to a file in this repo.
-- Deleting from the bucket (`prune` without `--dry-run`) needs the user's go-ahead.
+- Deleting from the bucket needs the user's go-ahead, except the Build packs workflow's
+  `prune --keep 2` after a publish, which is agreed. Do not lower `--keep` or add other deletes.
