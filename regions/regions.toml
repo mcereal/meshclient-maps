@@ -78,3 +78,11 @@ name = "United Kingdom"
 parent = "europe"
 geofabrik = "united-kingdom"
 max_zoom = 13
+
+[[pack]]
+id = "us-puerto-rico"
+name = "Puerto Rico"
+parent = "us"
+geofabrik = "us/puerto-rico"
+# Small enough that z14 is ~10k tiles; the client opens at z14.
+max_zoom = 14
