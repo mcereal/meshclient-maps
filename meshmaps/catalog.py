@@ -60,7 +60,13 @@ def assemble(groups, packs, sidecars, *, now=None):
         if slot not in newest or entry["cut"] > newest[slot]["cut"]:
             newest[slot] = entry
     listed = []
-    for (region_id, _style), entry in sorted(newest.items()):
+    # The top of the tree first, then by id. A client before mesh-client#415 reads the first 96
+    # entries, and the world base is what it draws everywhere else.
+    ordered = sorted(
+        newest.items(),
+        key=lambda item: (packs[item[0][0]].parent is not None if item[0][0] in packs else True, item[0]),
+    )
+    for (region_id, _style), entry in ordered:
         region = packs.get(region_id)
         if region is None:
             continue
