@@ -28,7 +28,7 @@ name = "Europe"
 [[pack]]
 id = "world"
 name = "World"
-max_zoom = 6
+max_zoom = 8
 
 [[pack]]
 id = "us-washington"

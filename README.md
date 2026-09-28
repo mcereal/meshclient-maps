@@ -65,7 +65,7 @@ The zoom cap is what sets a pack's size. Each level down is four times the tiles
 
 | Pack | Tiles | Size | Built on an M-series Mac |
 |---|---|---|---|
-| World base, z0-6 | 5,461 (2,383 distinct) | 10.2 MB | 38 s |
+| World base, z0-8 | 87,381 (24,835 distinct) | 128.6 MB | 8 min |
 | Washington, z0-13 | 26,883 (22,210 distinct) | 88.7 MB | 16 s extract, 125 s render |
 | Texas, z0-13 | 64,592 | ~210 MB (est.) | |
 | Germany, z0-13 | 57,304 | ~200-250 MB (est.) | |
