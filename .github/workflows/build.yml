@@ -16,8 +16,10 @@ on:
       shards:
         description: "Jobs to spread the regions over"
         default: "40"
-  schedule:
-    - cron: "0 6 2 * *"
+  # Off until a mesh-client release reads more than 96 catalog entries (mcereal/mesh-client#415):
+  # every region published before then hides most of them from the clients people have.
+  # schedule:
+  #   - cron: "0 6 2 * *"
 
 env:
   REGIONS: ${{ inputs.regions || 'all' }}
