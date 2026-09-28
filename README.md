@@ -102,7 +102,7 @@ sidecar in the bucket, so publishing one region never drops another. See
 
 The **Build packs** workflow does the same on GitHub Actions, and needs the three `R2_*` values
 as repository secrets. Given `all`, or run by its monthly schedule, it spreads every region over
-40 jobs balanced by estimated tiles (`meshmaps shards`), 20 at a time, all drawn from one planet
+40 jobs balanced by estimated tiles (`meshmaps shards`), 10 at a time, all drawn from one planet
 build. Each job uploads its packs without touching the catalog, and a last job rebuilds it once
 (`meshmaps publish-catalog`), so jobs never race to write it, and then prunes to the newest two
 cuts of each region (`prune --keep 2`): about 100 GB when every region is built.
