@@ -12,6 +12,7 @@ GROUPS = {
 PACKS = {
     "wa": Region("wa", "Washington", "us", "us/washington", 13),
     "de": Region("de", "Germany", "eu", "germany", 13),
+    "world": Region("world", "World", None, None, 8),
 }
 
 
@@ -35,6 +36,10 @@ class Catalog(unittest.TestCase):
     def test_names_and_parents_come_from_the_region_list(self):
         entry = self.assemble([side("wa", "20260927")])["packs"][0]
         self.assertEqual((entry["name"], entry["parent"]), ("Washington", "us"))
+
+    def test_the_top_of_the_tree_comes_first(self):
+        built = self.assemble([side("de", "20260927"), side("wa", "20260927"), side("world", "20260927")])
+        self.assertEqual([p["id"] for p in built["packs"]], ["world", "de", "wa"])
 
     def test_a_removed_region_drops_out(self):
         self.assertEqual(self.assemble([side("gone", "20260927")])["packs"], [])
