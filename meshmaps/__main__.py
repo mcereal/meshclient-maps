@@ -1,5 +1,6 @@
 """meshmaps: build, check and publish mesh-client's map packs.
 
+    python -m meshmaps plan                       regions.toml from regions/plan.toml and Geofabrik
     python -m meshmaps check                      regions.toml, and every outline it names
     python -m meshmaps tiles us-washington        how many tiles a region is, per zoom
     python -m meshmaps build us-washington        extract, render, pack, verify -> dist/
@@ -7,6 +8,8 @@
     python -m meshmaps verify dist/.../x.mctp     everything the client would refuse it for
     python -m meshmaps catalog                    dist/catalog.json from what is in dist/
     python -m meshmaps publish us-washington      upload a built pack, rebuild the remote catalog
+    python -m meshmaps publish-catalog            rebuild the remote catalog from its sidecars
+    python -m meshmaps shards 40 all              regions split into balanced batches, as JSON
     python -m meshmaps prune --keep 2             drop old cuts from R2
 """
 
@@ -18,10 +21,11 @@ import sys
 import time
 from collections import Counter
 
-from . import catalog, mctp, publish, regions, render, tiles
+from . import catalog, mctp, plan, publish, regions, render, tiles
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGIONS = os.path.join(ROOT, "regions", "regions.toml")
+PLAN = os.path.join(ROOT, "regions", "plan.toml")
 CACHE = os.path.join(ROOT, "build", "cache")
 WORK = os.path.join(ROOT, "build", "work")
 DIST = os.path.join(ROOT, "dist")
@@ -43,6 +47,35 @@ def pick(packs, region_id):
     if region_id not in packs:
         fail(f"no pack {region_id!r} in regions.toml")
     return packs[region_id]
+
+
+def cmd_plan(args):
+    features = regions.geofabrik_index(CACHE)
+    index = {gid: feature["properties"] for gid, feature in features.items()}
+    count = plan.counter(features, os.path.join(CACHE, f"tiles-z{plan.COUNT_ZOOM}.json"))
+    try:
+        result = plan.make(plan.load(PLAN), index, count)
+    except plan.PlanError as error:
+        fail(str(error))
+    per_group = Counter(pack.parent for pack in result.packs)
+    for group in result.groups:
+        print(f"  {group.name:<32} {per_group.get(group.id, 0):>3} packs")
+    print(f"split into subdivisions: {', '.join(result.split) or 'none'}")
+    print(f"drawn shallower to fit: {', '.join(f'{gid} z{zoom}' for gid, zoom in result.shallow) or 'none'}")
+    print(f"left to the world base: {', '.join(result.dropped) or 'none'}")
+    text = plan.render(result)
+    if args.dry_run:
+        print(f"{len(result.groups)} groups, {len(result.packs)} packs (not written)")
+        return
+    with open(REGIONS + ".part", "w") as handle:
+        handle.write(text)
+    try:
+        regions.load(REGIONS + ".part")
+    except (regions.RegionError, mctp.PackError) as error:
+        os.unlink(REGIONS + ".part")
+        fail(f"the plan does not make a valid regions.toml: {error}")
+    os.replace(REGIONS + ".part", REGIONS)
+    print(f"{len(result.groups)} groups, {len(result.packs)} packs -> regions/regions.toml")
 
 
 def cmd_check(args):
@@ -185,11 +218,49 @@ def cmd_publish(args):
                 fail(f"{path} does not match its sidecar")
             print(f"uploading {meta['url']} ({meta['bytes'] / 1e6:.1f} MB)")
             publish.upload_pack(s3, path, meta)
+        if args.no_catalog:
+            return
         text = catalog.dumps(catalog.assemble(groups, packs, publish.remote_sidecars(s3)))
         publish.upload_catalog(s3, text)
     except publish.PublishError as error:
         fail(str(error))
     print("catalog updated")
+
+
+def cmd_publish_catalog(args):
+    groups, packs = load_regions()
+    try:
+        s3 = publish.client()
+        built = catalog.assemble(groups, packs, publish.remote_sidecars(s3))
+        publish.upload_catalog(s3, catalog.dumps(built))
+    except publish.PublishError as error:
+        fail(str(error))
+    print(f"catalog updated: {len(built['packs'])} packs in {len(built['groups'])} groups")
+
+
+def cmd_shards(args):
+    """Regions in ``args.count`` batches of about equal work, longest first into the lightest -
+    what the build workflow runs one job per batch of, since a matrix holds 256 jobs."""
+    _, packs = load_regions()
+    wanted = list(packs) if args.regions == ["all"] else args.regions
+    for region_id in wanted:
+        pick(packs, region_id)
+    features = regions.geofabrik_index(CACHE)
+    count = plan.counter(features, os.path.join(CACHE, f"tiles-z{plan.COUNT_ZOOM}.json"))
+
+    def work(region_id):
+        region = packs[region_id]
+        if region.geofabrik is None:
+            return sum(4**z for z in range(region.max_zoom + 1))
+        return plan.estimate(count(region.geofabrik), region.max_zoom)
+
+    shards = [[] for _ in range(max(1, min(args.count, len(wanted))))]
+    loads = [0] * len(shards)
+    for region_id in sorted(wanted, key=work, reverse=True):
+        lightest = loads.index(min(loads))
+        shards[lightest].append(region_id)
+        loads[lightest] += work(region_id)
+    print(json.dumps([" ".join(shard) for shard in shards if shard]))
 
 
 def cmd_prune(args):
@@ -205,6 +276,10 @@ def cmd_prune(args):
 def main():
     parser = argparse.ArgumentParser(prog="meshmaps", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     commands = parser.add_subparsers(dest="command", required=True)
+
+    planned = commands.add_parser("plan")
+    planned.add_argument("--dry-run", action="store_true", help="print the plan, write nothing")
+    planned.set_defaults(run=cmd_plan)
 
     commands.add_parser("check").set_defaults(run=cmd_check)
 
@@ -230,7 +305,15 @@ def main():
 
     published = commands.add_parser("publish")
     published.add_argument("regions", nargs="+")
+    published.add_argument("--no-catalog", action="store_true", help="upload only; publish-catalog after")
     published.set_defaults(run=cmd_publish)
+
+    commands.add_parser("publish-catalog").set_defaults(run=cmd_publish_catalog)
+
+    sharded = commands.add_parser("shards")
+    sharded.add_argument("count", type=int)
+    sharded.add_argument("regions", nargs="+", help="region ids, or all")
+    sharded.set_defaults(run=cmd_shards)
 
     pruned = commands.add_parser("prune")
     pruned.add_argument("--keep", type=int, default=2)

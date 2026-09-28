@@ -1,20 +1,44 @@
-# What the pipeline builds, and the tree the client's download screen shows.
+# Written by `meshmaps plan` from regions/plan.toml and Geofabrik's index - edit plan.toml
+# and run `make plan` rather than changing this. Committed, so a build does not depend on
+# the index having stayed the same.
 #
-# A [[group]] is a heading in that tree and has no pack. A [[pack]] is one download.
-#
-#   id         stable forever: it is the pack's path on R2 and the key the client remembers
-#              an installed pack by. Lowercase, digits and hyphens.
-#   name       what the client shows; at most 31 bytes of UTF-8, the pack header's limit.
-#   parent     a group id, or omitted for the top of the tree.
-#   geofabrik  the Geofabrik region whose outline cuts the pack (download.geofabrik.de).
-#              Omitted for the world base, which is every tile.
-#   max_zoom   how far in the pack goes. 13 for a state or country; see README "Zoom and size".
-#
-# Group ids are part of the catalog contract too - a client may remember which one was open.
+# An id is permanent: it is the pack's path on R2 and how the client recognises an installed
+# pack when a newer cut appears.
+
+[[group]]
+id = "africa"
+name = "Africa"
+
+[[group]]
+id = "asia"
+name = "Asia"
+
+[[group]]
+id = "china"
+name = "China"
+parent = "asia"
+
+[[group]]
+id = "europe"
+name = "Europe"
+
+[[group]]
+id = "norway"
+name = "Norway"
+parent = "europe"
+
+[[group]]
+id = "russia"
+name = "Russia"
 
 [[group]]
 id = "north-america"
 name = "North America"
+
+[[group]]
+id = "canada"
+name = "Canada"
+parent = "north-america"
 
 [[group]]
 id = "us"
@@ -22,8 +46,26 @@ name = "United States"
 parent = "north-america"
 
 [[group]]
-id = "europe"
-name = "Europe"
+id = "central-america"
+name = "Central America"
+
+[[group]]
+id = "south-america"
+name = "South America"
+
+[[group]]
+id = "brazil"
+name = "Brazil"
+parent = "south-america"
+
+[[group]]
+id = "oceania"
+name = "Australia and Oceania"
+
+[[group]]
+id = "australia"
+name = "Australia"
+parent = "oceania"
 
 [[pack]]
 id = "world"
@@ -31,38 +73,997 @@ name = "World"
 max_zoom = 8
 
 [[pack]]
-id = "us-washington"
-name = "Washington"
-parent = "us"
-geofabrik = "us/washington"
+id = "algeria"
+name = "Algeria"
+parent = "africa"
+geofabrik = "algeria"
 max_zoom = 13
 
 [[pack]]
-id = "us-oregon"
-name = "Oregon"
-parent = "us"
-geofabrik = "us/oregon"
+id = "angola"
+name = "Angola"
+parent = "africa"
+geofabrik = "angola"
 max_zoom = 13
 
 [[pack]]
-id = "us-california"
-name = "California"
-parent = "us"
-geofabrik = "us/california"
+id = "benin"
+name = "Benin"
+parent = "africa"
+geofabrik = "benin"
 max_zoom = 13
 
 [[pack]]
-id = "us-texas"
-name = "Texas"
-parent = "us"
-geofabrik = "us/texas"
+id = "botswana"
+name = "Botswana"
+parent = "africa"
+geofabrik = "botswana"
 max_zoom = 13
 
 [[pack]]
-id = "us-colorado"
-name = "Colorado"
-parent = "us"
-geofabrik = "us/colorado"
+id = "burkina-faso"
+name = "Burkina Faso"
+parent = "africa"
+geofabrik = "burkina-faso"
+max_zoom = 13
+
+[[pack]]
+id = "burundi"
+name = "Burundi"
+parent = "africa"
+geofabrik = "burundi"
+max_zoom = 13
+
+[[pack]]
+id = "cameroon"
+name = "Cameroon"
+parent = "africa"
+geofabrik = "cameroon"
+max_zoom = 13
+
+[[pack]]
+id = "canary-islands"
+name = "Canary Islands"
+parent = "africa"
+geofabrik = "canary-islands"
+max_zoom = 13
+
+[[pack]]
+id = "cape-verde"
+name = "Cape Verde"
+parent = "africa"
+geofabrik = "cape-verde"
+max_zoom = 13
+
+[[pack]]
+id = "central-african-republic"
+name = "Central African Republic"
+parent = "africa"
+geofabrik = "central-african-republic"
+max_zoom = 13
+
+[[pack]]
+id = "chad"
+name = "Chad"
+parent = "africa"
+geofabrik = "chad"
+max_zoom = 13
+
+[[pack]]
+id = "comores"
+name = "Comores"
+parent = "africa"
+geofabrik = "comores"
+max_zoom = 13
+
+[[pack]]
+id = "congo-brazzaville"
+name = "Congo"
+parent = "africa"
+geofabrik = "congo-brazzaville"
+max_zoom = 13
+
+[[pack]]
+id = "congo-democratic-republic"
+name = "DR Congo"
+parent = "africa"
+geofabrik = "congo-democratic-republic"
+max_zoom = 13
+
+[[pack]]
+id = "djibouti"
+name = "Djibouti"
+parent = "africa"
+geofabrik = "djibouti"
+max_zoom = 13
+
+[[pack]]
+id = "egypt"
+name = "Egypt"
+parent = "africa"
+geofabrik = "egypt"
+max_zoom = 13
+
+[[pack]]
+id = "equatorial-guinea"
+name = "Equatorial Guinea"
+parent = "africa"
+geofabrik = "equatorial-guinea"
+max_zoom = 13
+
+[[pack]]
+id = "eritrea"
+name = "Eritrea"
+parent = "africa"
+geofabrik = "eritrea"
+max_zoom = 13
+
+[[pack]]
+id = "ethiopia"
+name = "Ethiopia"
+parent = "africa"
+geofabrik = "ethiopia"
+max_zoom = 13
+
+[[pack]]
+id = "gabon"
+name = "Gabon"
+parent = "africa"
+geofabrik = "gabon"
+max_zoom = 13
+
+[[pack]]
+id = "ghana"
+name = "Ghana"
+parent = "africa"
+geofabrik = "ghana"
+max_zoom = 13
+
+[[pack]]
+id = "guinea"
+name = "Guinea"
+parent = "africa"
+geofabrik = "guinea"
+max_zoom = 13
+
+[[pack]]
+id = "guinea-bissau"
+name = "Guinea-Bissau"
+parent = "africa"
+geofabrik = "guinea-bissau"
+max_zoom = 13
+
+[[pack]]
+id = "ivory-coast"
+name = "Ivory Coast"
+parent = "africa"
+geofabrik = "ivory-coast"
+max_zoom = 13
+
+[[pack]]
+id = "kenya"
+name = "Kenya"
+parent = "africa"
+geofabrik = "kenya"
+max_zoom = 13
+
+[[pack]]
+id = "lesotho"
+name = "Lesotho"
+parent = "africa"
+geofabrik = "lesotho"
+max_zoom = 13
+
+[[pack]]
+id = "liberia"
+name = "Liberia"
+parent = "africa"
+geofabrik = "liberia"
+max_zoom = 13
+
+[[pack]]
+id = "libya"
+name = "Libya"
+parent = "africa"
+geofabrik = "libya"
+max_zoom = 13
+
+[[pack]]
+id = "madagascar"
+name = "Madagascar"
+parent = "africa"
+geofabrik = "madagascar"
+max_zoom = 13
+
+[[pack]]
+id = "malawi"
+name = "Malawi"
+parent = "africa"
+geofabrik = "malawi"
+max_zoom = 13
+
+[[pack]]
+id = "mali"
+name = "Mali"
+parent = "africa"
+geofabrik = "mali"
+max_zoom = 13
+
+[[pack]]
+id = "mauritania"
+name = "Mauritania"
+parent = "africa"
+geofabrik = "mauritania"
+max_zoom = 13
+
+[[pack]]
+id = "mauritius"
+name = "Mauritius"
+parent = "africa"
+geofabrik = "mauritius"
+max_zoom = 13
+
+[[pack]]
+id = "morocco"
+name = "Morocco"
+parent = "africa"
+geofabrik = "morocco"
+max_zoom = 13
+
+[[pack]]
+id = "mozambique"
+name = "Mozambique"
+parent = "africa"
+geofabrik = "mozambique"
+max_zoom = 13
+
+[[pack]]
+id = "namibia"
+name = "Namibia"
+parent = "africa"
+geofabrik = "namibia"
+max_zoom = 13
+
+[[pack]]
+id = "niger"
+name = "Niger"
+parent = "africa"
+geofabrik = "niger"
+max_zoom = 13
+
+[[pack]]
+id = "nigeria"
+name = "Nigeria"
+parent = "africa"
+geofabrik = "nigeria"
+max_zoom = 13
+
+[[pack]]
+id = "rwanda"
+name = "Rwanda"
+parent = "africa"
+geofabrik = "rwanda"
+max_zoom = 13
+
+[[pack]]
+id = "saint-helena-ascension-and-tristan-da-cunha"
+name = "St Helena, Ascension, Tristan"
+parent = "africa"
+geofabrik = "saint-helena-ascension-and-tristan-da-cunha"
+max_zoom = 13
+
+[[pack]]
+id = "sao-tome-and-principe"
+name = "Sao Tome and Principe"
+parent = "africa"
+geofabrik = "sao-tome-and-principe"
+max_zoom = 13
+
+[[pack]]
+id = "senegal-and-gambia"
+name = "Senegal and Gambia"
+parent = "africa"
+geofabrik = "senegal-and-gambia"
+max_zoom = 13
+
+[[pack]]
+id = "seychelles"
+name = "Seychelles"
+parent = "africa"
+geofabrik = "seychelles"
+max_zoom = 13
+
+[[pack]]
+id = "sierra-leone"
+name = "Sierra Leone"
+parent = "africa"
+geofabrik = "sierra-leone"
+max_zoom = 13
+
+[[pack]]
+id = "somalia"
+name = "Somalia"
+parent = "africa"
+geofabrik = "somalia"
+max_zoom = 13
+
+[[pack]]
+id = "south-africa"
+name = "South Africa"
+parent = "africa"
+geofabrik = "south-africa"
+max_zoom = 12
+
+[[pack]]
+id = "south-sudan"
+name = "South Sudan"
+parent = "africa"
+geofabrik = "south-sudan"
+max_zoom = 13
+
+[[pack]]
+id = "sudan"
+name = "Sudan"
+parent = "africa"
+geofabrik = "sudan"
+max_zoom = 13
+
+[[pack]]
+id = "swaziland"
+name = "Swaziland"
+parent = "africa"
+geofabrik = "swaziland"
+max_zoom = 13
+
+[[pack]]
+id = "tanzania"
+name = "Tanzania"
+parent = "africa"
+geofabrik = "tanzania"
+max_zoom = 13
+
+[[pack]]
+id = "togo"
+name = "Togo"
+parent = "africa"
+geofabrik = "togo"
+max_zoom = 13
+
+[[pack]]
+id = "tunisia"
+name = "Tunisia"
+parent = "africa"
+geofabrik = "tunisia"
+max_zoom = 13
+
+[[pack]]
+id = "uganda"
+name = "Uganda"
+parent = "africa"
+geofabrik = "uganda"
+max_zoom = 13
+
+[[pack]]
+id = "zambia"
+name = "Zambia"
+parent = "africa"
+geofabrik = "zambia"
+max_zoom = 13
+
+[[pack]]
+id = "zimbabwe"
+name = "Zimbabwe"
+parent = "africa"
+geofabrik = "zimbabwe"
+max_zoom = 13
+
+[[pack]]
+id = "afghanistan"
+name = "Afghanistan"
+parent = "asia"
+geofabrik = "afghanistan"
+max_zoom = 13
+
+[[pack]]
+id = "armenia"
+name = "Armenia"
+parent = "asia"
+geofabrik = "armenia"
+max_zoom = 13
+
+[[pack]]
+id = "azerbaijan"
+name = "Azerbaijan"
+parent = "asia"
+geofabrik = "azerbaijan"
+max_zoom = 13
+
+[[pack]]
+id = "bangladesh"
+name = "Bangladesh"
+parent = "asia"
+geofabrik = "bangladesh"
+max_zoom = 13
+
+[[pack]]
+id = "bhutan"
+name = "Bhutan"
+parent = "asia"
+geofabrik = "bhutan"
+max_zoom = 13
+
+[[pack]]
+id = "cambodia"
+name = "Cambodia"
+parent = "asia"
+geofabrik = "cambodia"
+max_zoom = 13
+
+[[pack]]
+id = "east-timor"
+name = "East Timor"
+parent = "asia"
+geofabrik = "east-timor"
+max_zoom = 13
+
+[[pack]]
+id = "gcc-states"
+name = "GCC States"
+parent = "asia"
+geofabrik = "gcc-states"
+max_zoom = 13
+
+[[pack]]
+id = "india"
+name = "India"
+parent = "asia"
+geofabrik = "india"
+max_zoom = 13
+
+[[pack]]
+id = "indonesia"
+name = "Indonesia (with East Timor)"
+parent = "asia"
+geofabrik = "indonesia"
+max_zoom = 13
+
+[[pack]]
+id = "iran"
+name = "Iran"
+parent = "asia"
+geofabrik = "iran"
+max_zoom = 13
+
+[[pack]]
+id = "iraq"
+name = "Iraq"
+parent = "asia"
+geofabrik = "iraq"
+max_zoom = 13
+
+[[pack]]
+id = "israel-and-palestine"
+name = "Israel and Palestine"
+parent = "asia"
+geofabrik = "israel-and-palestine"
+max_zoom = 13
+
+[[pack]]
+id = "japan"
+name = "Japan"
+parent = "asia"
+geofabrik = "japan"
+max_zoom = 13
+
+[[pack]]
+id = "jordan"
+name = "Jordan"
+parent = "asia"
+geofabrik = "jordan"
+max_zoom = 13
+
+[[pack]]
+id = "kazakhstan"
+name = "Kazakhstan"
+parent = "asia"
+geofabrik = "kazakhstan"
+max_zoom = 13
+
+[[pack]]
+id = "kyrgyzstan"
+name = "Kyrgyzstan"
+parent = "asia"
+geofabrik = "kyrgyzstan"
+max_zoom = 13
+
+[[pack]]
+id = "laos"
+name = "Laos"
+parent = "asia"
+geofabrik = "laos"
+max_zoom = 13
+
+[[pack]]
+id = "lebanon"
+name = "Lebanon"
+parent = "asia"
+geofabrik = "lebanon"
+max_zoom = 13
+
+[[pack]]
+id = "malaysia-singapore-brunei"
+name = "Malaysia, Singapore, and Brunei"
+parent = "asia"
+geofabrik = "malaysia-singapore-brunei"
+max_zoom = 13
+
+[[pack]]
+id = "maldives"
+name = "Maldives"
+parent = "asia"
+geofabrik = "maldives"
+max_zoom = 13
+
+[[pack]]
+id = "mongolia"
+name = "Mongolia"
+parent = "asia"
+geofabrik = "mongolia"
+max_zoom = 13
+
+[[pack]]
+id = "myanmar"
+name = "Myanmar (a.k.a. Burma)"
+parent = "asia"
+geofabrik = "myanmar"
+max_zoom = 13
+
+[[pack]]
+id = "nepal"
+name = "Nepal"
+parent = "asia"
+geofabrik = "nepal"
+max_zoom = 13
+
+[[pack]]
+id = "north-korea"
+name = "North Korea"
+parent = "asia"
+geofabrik = "north-korea"
+max_zoom = 13
+
+[[pack]]
+id = "pakistan"
+name = "Pakistan"
+parent = "asia"
+geofabrik = "pakistan"
+max_zoom = 13
+
+[[pack]]
+id = "philippines"
+name = "Philippines"
+parent = "asia"
+geofabrik = "philippines"
+max_zoom = 13
+
+[[pack]]
+id = "south-korea"
+name = "South Korea"
+parent = "asia"
+geofabrik = "south-korea"
+max_zoom = 13
+
+[[pack]]
+id = "sri-lanka"
+name = "Sri Lanka"
+parent = "asia"
+geofabrik = "sri-lanka"
+max_zoom = 13
+
+[[pack]]
+id = "syria"
+name = "Syria"
+parent = "asia"
+geofabrik = "syria"
+max_zoom = 13
+
+[[pack]]
+id = "taiwan"
+name = "Taiwan"
+parent = "asia"
+geofabrik = "taiwan"
+max_zoom = 13
+
+[[pack]]
+id = "tajikistan"
+name = "Tajikistan"
+parent = "asia"
+geofabrik = "tajikistan"
+max_zoom = 13
+
+[[pack]]
+id = "thailand"
+name = "Thailand"
+parent = "asia"
+geofabrik = "thailand"
+max_zoom = 13
+
+[[pack]]
+id = "turkmenistan"
+name = "Turkmenistan"
+parent = "asia"
+geofabrik = "turkmenistan"
+max_zoom = 13
+
+[[pack]]
+id = "uzbekistan"
+name = "Uzbekistan"
+parent = "asia"
+geofabrik = "uzbekistan"
+max_zoom = 13
+
+[[pack]]
+id = "vietnam"
+name = "Vietnam"
+parent = "asia"
+geofabrik = "vietnam"
+max_zoom = 13
+
+[[pack]]
+id = "yemen"
+name = "Yemen"
+parent = "asia"
+geofabrik = "yemen"
+max_zoom = 13
+
+[[pack]]
+id = "china-anhui"
+name = "Anhui"
+parent = "china"
+geofabrik = "anhui"
+max_zoom = 13
+
+[[pack]]
+id = "china-beijing"
+name = "Beijing"
+parent = "china"
+geofabrik = "beijing"
+max_zoom = 13
+
+[[pack]]
+id = "china-chongqing"
+name = "Chongqing"
+parent = "china"
+geofabrik = "chongqing"
+max_zoom = 13
+
+[[pack]]
+id = "china-fujian"
+name = "Fujian"
+parent = "china"
+geofabrik = "fujian"
+max_zoom = 13
+
+[[pack]]
+id = "china-gansu"
+name = "Gansu"
+parent = "china"
+geofabrik = "gansu"
+max_zoom = 13
+
+[[pack]]
+id = "china-guangdong"
+name = "Guangdong, Hong Kong, Macau"
+parent = "china"
+geofabrik = "guangdong"
+max_zoom = 13
+
+[[pack]]
+id = "china-guangxi"
+name = "Guangxi"
+parent = "china"
+geofabrik = "guangxi"
+max_zoom = 13
+
+[[pack]]
+id = "china-guizhou"
+name = "Guizhou"
+parent = "china"
+geofabrik = "guizhou"
+max_zoom = 13
+
+[[pack]]
+id = "china-hainan"
+name = "Hainan"
+parent = "china"
+geofabrik = "hainan"
+max_zoom = 13
+
+[[pack]]
+id = "china-hebei"
+name = "Hebei, Beijing, Tianjin"
+parent = "china"
+geofabrik = "hebei"
+max_zoom = 13
+
+[[pack]]
+id = "china-heilongjiang"
+name = "Heilongjiang"
+parent = "china"
+geofabrik = "heilongjiang"
+max_zoom = 13
+
+[[pack]]
+id = "china-henan"
+name = "Henan"
+parent = "china"
+geofabrik = "henan"
+max_zoom = 13
+
+[[pack]]
+id = "china-hong-kong"
+name = "Hong Kong"
+parent = "china"
+geofabrik = "hong-kong"
+max_zoom = 13
+
+[[pack]]
+id = "china-hubei"
+name = "Hubei"
+parent = "china"
+geofabrik = "hubei"
+max_zoom = 13
+
+[[pack]]
+id = "china-hunan"
+name = "Hunan"
+parent = "china"
+geofabrik = "hunan"
+max_zoom = 13
+
+[[pack]]
+id = "china-inner-mongolia"
+name = "Inner Mongolia"
+parent = "china"
+geofabrik = "inner-mongolia"
+max_zoom = 13
+
+[[pack]]
+id = "china-jiangsu"
+name = "Jiangsu"
+parent = "china"
+geofabrik = "jiangsu"
+max_zoom = 13
+
+[[pack]]
+id = "china-jiangxi"
+name = "Jiangxi"
+parent = "china"
+geofabrik = "jiangxi"
+max_zoom = 13
+
+[[pack]]
+id = "china-jilin"
+name = "Jilin"
+parent = "china"
+geofabrik = "jilin"
+max_zoom = 13
+
+[[pack]]
+id = "china-liaoning"
+name = "Liaoning"
+parent = "china"
+geofabrik = "liaoning"
+max_zoom = 13
+
+[[pack]]
+id = "china-macau"
+name = "Macau"
+parent = "china"
+geofabrik = "macau"
+max_zoom = 13
+
+[[pack]]
+id = "china-ningxia"
+name = "Ningxia"
+parent = "china"
+geofabrik = "ningxia"
+max_zoom = 13
+
+[[pack]]
+id = "china-qinghai"
+name = "Qinghai"
+parent = "china"
+geofabrik = "qinghai"
+max_zoom = 13
+
+[[pack]]
+id = "china-shaanxi"
+name = "Shaanxi"
+parent = "china"
+geofabrik = "shaanxi"
+max_zoom = 13
+
+[[pack]]
+id = "china-shandong"
+name = "Shandong"
+parent = "china"
+geofabrik = "shandong"
+max_zoom = 13
+
+[[pack]]
+id = "china-shanghai"
+name = "Shanghai"
+parent = "china"
+geofabrik = "shanghai"
+max_zoom = 13
+
+[[pack]]
+id = "china-shanxi"
+name = "Shanxi"
+parent = "china"
+geofabrik = "shanxi"
+max_zoom = 13
+
+[[pack]]
+id = "china-sichuan"
+name = "Sichuan"
+parent = "china"
+geofabrik = "sichuan"
+max_zoom = 13
+
+[[pack]]
+id = "china-tianjin"
+name = "Tianjin"
+parent = "china"
+geofabrik = "tianjin"
+max_zoom = 13
+
+[[pack]]
+id = "china-tibet"
+name = "Tibet"
+parent = "china"
+geofabrik = "tibet"
+max_zoom = 13
+
+[[pack]]
+id = "china-xinjiang"
+name = "Xinjiang"
+parent = "china"
+geofabrik = "xinjiang"
+max_zoom = 13
+
+[[pack]]
+id = "china-yunnan"
+name = "Yunnan"
+parent = "china"
+geofabrik = "yunnan"
+max_zoom = 13
+
+[[pack]]
+id = "china-zhejiang"
+name = "Zhejiang"
+parent = "china"
+geofabrik = "zhejiang"
+max_zoom = 13
+
+[[pack]]
+id = "albania"
+name = "Albania"
+parent = "europe"
+geofabrik = "albania"
+max_zoom = 13
+
+[[pack]]
+id = "andorra"
+name = "Andorra"
+parent = "europe"
+geofabrik = "andorra"
+max_zoom = 13
+
+[[pack]]
+id = "austria"
+name = "Austria"
+parent = "europe"
+geofabrik = "austria"
+max_zoom = 13
+
+[[pack]]
+id = "azores"
+name = "Azores"
+parent = "europe"
+geofabrik = "azores"
+max_zoom = 13
+
+[[pack]]
+id = "belarus"
+name = "Belarus"
+parent = "europe"
+geofabrik = "belarus"
+max_zoom = 13
+
+[[pack]]
+id = "belgium"
+name = "Belgium"
+parent = "europe"
+geofabrik = "belgium"
+max_zoom = 13
+
+[[pack]]
+id = "bosnia-herzegovina"
+name = "Bosnia-Herzegovina"
+parent = "europe"
+geofabrik = "bosnia-herzegovina"
+max_zoom = 13
+
+[[pack]]
+id = "bulgaria"
+name = "Bulgaria"
+parent = "europe"
+geofabrik = "bulgaria"
+max_zoom = 13
+
+[[pack]]
+id = "croatia"
+name = "Croatia"
+parent = "europe"
+geofabrik = "croatia"
+max_zoom = 13
+
+[[pack]]
+id = "cyprus"
+name = "Cyprus"
+parent = "europe"
+geofabrik = "cyprus"
+max_zoom = 13
+
+[[pack]]
+id = "czech-republic"
+name = "Czech Republic"
+parent = "europe"
+geofabrik = "czech-republic"
+max_zoom = 13
+
+[[pack]]
+id = "denmark"
+name = "Denmark"
+parent = "europe"
+geofabrik = "denmark"
+max_zoom = 13
+
+[[pack]]
+id = "estonia"
+name = "Estonia"
+parent = "europe"
+geofabrik = "estonia"
+max_zoom = 13
+
+[[pack]]
+id = "faroe-islands"
+name = "Faroe Islands"
+parent = "europe"
+geofabrik = "faroe-islands"
+max_zoom = 13
+
+[[pack]]
+id = "finland"
+name = "Finland"
+parent = "europe"
+geofabrik = "finland"
+max_zoom = 13
+
+[[pack]]
+id = "france"
+name = "France"
+parent = "europe"
+geofabrik = "france"
+max_zoom = 13
+
+[[pack]]
+id = "georgia"
+name = "Georgia"
+parent = "europe"
+geofabrik = "georgia"
 max_zoom = 13
 
 [[pack]]
@@ -73,6 +1074,209 @@ geofabrik = "germany"
 max_zoom = 13
 
 [[pack]]
+id = "greece"
+name = "Greece"
+parent = "europe"
+geofabrik = "greece"
+max_zoom = 13
+
+[[pack]]
+id = "guernsey-jersey"
+name = "Guernsey and Jersey"
+parent = "europe"
+geofabrik = "guernsey-jersey"
+max_zoom = 13
+
+[[pack]]
+id = "hungary"
+name = "Hungary"
+parent = "europe"
+geofabrik = "hungary"
+max_zoom = 13
+
+[[pack]]
+id = "iceland"
+name = "Iceland"
+parent = "europe"
+geofabrik = "iceland"
+max_zoom = 13
+
+[[pack]]
+id = "ireland-and-northern-ireland"
+name = "Ireland and Northern Ireland"
+parent = "europe"
+geofabrik = "ireland-and-northern-ireland"
+max_zoom = 13
+
+[[pack]]
+id = "isle-of-man"
+name = "Isle of Man"
+parent = "europe"
+geofabrik = "isle-of-man"
+max_zoom = 13
+
+[[pack]]
+id = "italy"
+name = "Italy"
+parent = "europe"
+geofabrik = "italy"
+max_zoom = 13
+
+[[pack]]
+id = "kosovo"
+name = "Kosovo"
+parent = "europe"
+geofabrik = "kosovo"
+max_zoom = 13
+
+[[pack]]
+id = "latvia"
+name = "Latvia"
+parent = "europe"
+geofabrik = "latvia"
+max_zoom = 13
+
+[[pack]]
+id = "liechtenstein"
+name = "Liechtenstein"
+parent = "europe"
+geofabrik = "liechtenstein"
+max_zoom = 13
+
+[[pack]]
+id = "lithuania"
+name = "Lithuania"
+parent = "europe"
+geofabrik = "lithuania"
+max_zoom = 13
+
+[[pack]]
+id = "luxembourg"
+name = "Luxembourg"
+parent = "europe"
+geofabrik = "luxembourg"
+max_zoom = 13
+
+[[pack]]
+id = "macedonia"
+name = "Macedonia"
+parent = "europe"
+geofabrik = "macedonia"
+max_zoom = 13
+
+[[pack]]
+id = "malta"
+name = "Malta"
+parent = "europe"
+geofabrik = "malta"
+max_zoom = 13
+
+[[pack]]
+id = "moldova"
+name = "Moldova"
+parent = "europe"
+geofabrik = "moldova"
+max_zoom = 13
+
+[[pack]]
+id = "monaco"
+name = "Monaco"
+parent = "europe"
+geofabrik = "monaco"
+max_zoom = 13
+
+[[pack]]
+id = "montenegro"
+name = "Montenegro"
+parent = "europe"
+geofabrik = "montenegro"
+max_zoom = 13
+
+[[pack]]
+id = "netherlands"
+name = "Netherlands"
+parent = "europe"
+geofabrik = "netherlands"
+max_zoom = 13
+
+[[pack]]
+id = "poland"
+name = "Poland"
+parent = "europe"
+geofabrik = "poland"
+max_zoom = 13
+
+[[pack]]
+id = "portugal"
+name = "Portugal"
+parent = "europe"
+geofabrik = "portugal"
+max_zoom = 13
+
+[[pack]]
+id = "romania"
+name = "Romania"
+parent = "europe"
+geofabrik = "romania"
+max_zoom = 13
+
+[[pack]]
+id = "serbia"
+name = "Serbia"
+parent = "europe"
+geofabrik = "serbia"
+max_zoom = 13
+
+[[pack]]
+id = "slovakia"
+name = "Slovakia"
+parent = "europe"
+geofabrik = "slovakia"
+max_zoom = 13
+
+[[pack]]
+id = "slovenia"
+name = "Slovenia"
+parent = "europe"
+geofabrik = "slovenia"
+max_zoom = 13
+
+[[pack]]
+id = "spain"
+name = "Spain"
+parent = "europe"
+geofabrik = "spain"
+max_zoom = 13
+
+[[pack]]
+id = "sweden"
+name = "Sweden"
+parent = "europe"
+geofabrik = "sweden"
+max_zoom = 13
+
+[[pack]]
+id = "switzerland"
+name = "Switzerland"
+parent = "europe"
+geofabrik = "switzerland"
+max_zoom = 13
+
+[[pack]]
+id = "turkey"
+name = "Turkey"
+parent = "europe"
+geofabrik = "turkey"
+max_zoom = 13
+
+[[pack]]
+id = "ukraine"
+name = "Ukraine (with Crimea)"
+parent = "europe"
+geofabrik = "ukraine"
+max_zoom = 13
+
+[[pack]]
 id = "united-kingdom"
 name = "United Kingdom"
 parent = "europe"
@@ -80,9 +1284,1030 @@ geofabrik = "united-kingdom"
 max_zoom = 13
 
 [[pack]]
+id = "norway-nord-norge"
+name = "Nord Norge"
+parent = "norway"
+geofabrik = "nord-norge"
+max_zoom = 13
+
+[[pack]]
+id = "norway-ostlandet"
+name = "Ostlandet"
+parent = "norway"
+geofabrik = "ostlandet"
+max_zoom = 13
+
+[[pack]]
+id = "norway-sorlandet"
+name = "Sorlandet"
+parent = "norway"
+geofabrik = "sorlandet"
+max_zoom = 13
+
+[[pack]]
+id = "norway-svalbard-janmayen"
+name = "Svalbard and Jan Mayen"
+parent = "norway"
+geofabrik = "svalbard-janmayen"
+max_zoom = 12
+
+[[pack]]
+id = "norway-trondelag"
+name = "Trondelag"
+parent = "norway"
+geofabrik = "trondelag"
+max_zoom = 13
+
+[[pack]]
+id = "norway-vestlandet"
+name = "Vestlandet"
+parent = "norway"
+geofabrik = "vestlandet"
+max_zoom = 13
+
+[[pack]]
+id = "central-fed-district"
+name = "Central Federal District"
+parent = "russia"
+geofabrik = "central-fed-district"
+max_zoom = 13
+
+[[pack]]
+id = "crimean-fed-district"
+name = "Crimean Federal District"
+parent = "russia"
+geofabrik = "crimean-fed-district"
+max_zoom = 13
+
+[[pack]]
+id = "far-eastern-fed-district"
+name = "Far Eastern Federal District"
+parent = "russia"
+geofabrik = "far-eastern-fed-district"
+max_zoom = 11
+
+[[pack]]
+id = "kaliningrad"
+name = "Kaliningrad"
+parent = "russia"
+geofabrik = "kaliningrad"
+max_zoom = 13
+
+[[pack]]
+id = "north-caucasus-fed-district"
+name = "North Caucasus Federal District"
+parent = "russia"
+geofabrik = "north-caucasus-fed-district"
+max_zoom = 13
+
+[[pack]]
+id = "northwestern-fed-district"
+name = "Northwestern Federal District"
+parent = "russia"
+geofabrik = "northwestern-fed-district"
+max_zoom = 11
+
+[[pack]]
+id = "siberian-fed-district"
+name = "Siberian Federal District"
+parent = "russia"
+geofabrik = "siberian-fed-district"
+max_zoom = 11
+
+[[pack]]
+id = "south-fed-district"
+name = "South Federal District"
+parent = "russia"
+geofabrik = "south-fed-district"
+max_zoom = 13
+
+[[pack]]
+id = "ural-fed-district"
+name = "Ural Federal District"
+parent = "russia"
+geofabrik = "ural-fed-district"
+max_zoom = 12
+
+[[pack]]
+id = "volga-fed-district"
+name = "Volga Federal District"
+parent = "russia"
+geofabrik = "volga-fed-district"
+max_zoom = 13
+
+[[pack]]
+id = "greenland"
+name = "Greenland"
+parent = "north-america"
+geofabrik = "greenland"
+max_zoom = 11
+
+[[pack]]
+id = "mexico"
+name = "Mexico"
+parent = "north-america"
+geofabrik = "mexico"
+max_zoom = 12
+
+[[pack]]
+id = "canada-alberta"
+name = "Alberta"
+parent = "canada"
+geofabrik = "alberta"
+max_zoom = 13
+
+[[pack]]
+id = "canada-british-columbia"
+name = "British Columbia"
+parent = "canada"
+geofabrik = "british-columbia"
+max_zoom = 13
+
+[[pack]]
+id = "canada-manitoba"
+name = "Manitoba"
+parent = "canada"
+geofabrik = "manitoba"
+max_zoom = 13
+
+[[pack]]
+id = "canada-new-brunswick"
+name = "New Brunswick"
+parent = "canada"
+geofabrik = "new-brunswick"
+max_zoom = 13
+
+[[pack]]
+id = "canada-newfoundland-and-labrador"
+name = "Newfoundland and Labrador"
+parent = "canada"
+geofabrik = "newfoundland-and-labrador"
+max_zoom = 13
+
+[[pack]]
+id = "canada-northwest-territories"
+name = "Northwest Territories"
+parent = "canada"
+geofabrik = "northwest-territories"
+max_zoom = 12
+
+[[pack]]
+id = "canada-nova-scotia"
+name = "Nova Scotia"
+parent = "canada"
+geofabrik = "nova-scotia"
+max_zoom = 13
+
+[[pack]]
+id = "canada-nunavut"
+name = "Nunavut"
+parent = "canada"
+geofabrik = "nunavut"
+max_zoom = 11
+
+[[pack]]
+id = "canada-ontario"
+name = "Ontario"
+parent = "canada"
+geofabrik = "ontario"
+max_zoom = 13
+
+[[pack]]
+id = "canada-prince-edward-island"
+name = "Prince Edward Island"
+parent = "canada"
+geofabrik = "prince-edward-island"
+max_zoom = 13
+
+[[pack]]
+id = "canada-quebec"
+name = "Quebec"
+parent = "canada"
+geofabrik = "quebec"
+max_zoom = 13
+
+[[pack]]
+id = "canada-saskatchewan"
+name = "Saskatchewan"
+parent = "canada"
+geofabrik = "saskatchewan"
+max_zoom = 13
+
+[[pack]]
+id = "canada-yukon"
+name = "Yukon"
+parent = "canada"
+geofabrik = "yukon"
+max_zoom = 13
+
+[[pack]]
+id = "us-alabama"
+name = "Alabama"
+parent = "us"
+geofabrik = "us/alabama"
+max_zoom = 13
+
+[[pack]]
+id = "us-alaska"
+name = "Alaska"
+parent = "us"
+geofabrik = "us/alaska"
+max_zoom = 12
+
+[[pack]]
+id = "us-arizona"
+name = "Arizona"
+parent = "us"
+geofabrik = "us/arizona"
+max_zoom = 13
+
+[[pack]]
+id = "us-arkansas"
+name = "Arkansas"
+parent = "us"
+geofabrik = "us/arkansas"
+max_zoom = 13
+
+[[pack]]
+id = "us-california"
+name = "California"
+parent = "us"
+geofabrik = "us/california"
+max_zoom = 13
+
+[[pack]]
+id = "us-colorado"
+name = "Colorado"
+parent = "us"
+geofabrik = "us/colorado"
+max_zoom = 13
+
+[[pack]]
+id = "us-connecticut"
+name = "Connecticut"
+parent = "us"
+geofabrik = "us/connecticut"
+max_zoom = 13
+
+[[pack]]
+id = "us-delaware"
+name = "Delaware"
+parent = "us"
+geofabrik = "us/delaware"
+max_zoom = 13
+
+[[pack]]
+id = "us-district-of-columbia"
+name = "District of Columbia"
+parent = "us"
+geofabrik = "us/district-of-columbia"
+max_zoom = 13
+
+[[pack]]
+id = "us-florida"
+name = "Florida"
+parent = "us"
+geofabrik = "us/florida"
+max_zoom = 13
+
+[[pack]]
+id = "us-georgia"
+name = "Georgia"
+parent = "us"
+geofabrik = "us/georgia"
+max_zoom = 13
+
+[[pack]]
+id = "us-hawaii"
+name = "Hawaii"
+parent = "us"
+geofabrik = "us/hawaii"
+max_zoom = 13
+
+[[pack]]
+id = "us-idaho"
+name = "Idaho"
+parent = "us"
+geofabrik = "us/idaho"
+max_zoom = 13
+
+[[pack]]
+id = "us-illinois"
+name = "Illinois"
+parent = "us"
+geofabrik = "us/illinois"
+max_zoom = 13
+
+[[pack]]
+id = "us-indiana"
+name = "Indiana"
+parent = "us"
+geofabrik = "us/indiana"
+max_zoom = 13
+
+[[pack]]
+id = "us-iowa"
+name = "Iowa"
+parent = "us"
+geofabrik = "us/iowa"
+max_zoom = 13
+
+[[pack]]
+id = "us-kansas"
+name = "Kansas"
+parent = "us"
+geofabrik = "us/kansas"
+max_zoom = 13
+
+[[pack]]
+id = "us-kentucky"
+name = "Kentucky"
+parent = "us"
+geofabrik = "us/kentucky"
+max_zoom = 13
+
+[[pack]]
+id = "us-louisiana"
+name = "Louisiana"
+parent = "us"
+geofabrik = "us/louisiana"
+max_zoom = 13
+
+[[pack]]
+id = "us-maine"
+name = "Maine"
+parent = "us"
+geofabrik = "us/maine"
+max_zoom = 13
+
+[[pack]]
+id = "us-maryland"
+name = "Maryland"
+parent = "us"
+geofabrik = "us/maryland"
+max_zoom = 13
+
+[[pack]]
+id = "us-massachusetts"
+name = "Massachusetts"
+parent = "us"
+geofabrik = "us/massachusetts"
+max_zoom = 13
+
+[[pack]]
+id = "us-michigan"
+name = "Michigan"
+parent = "us"
+geofabrik = "us/michigan"
+max_zoom = 13
+
+[[pack]]
+id = "us-minnesota"
+name = "Minnesota"
+parent = "us"
+geofabrik = "us/minnesota"
+max_zoom = 13
+
+[[pack]]
+id = "us-mississippi"
+name = "Mississippi"
+parent = "us"
+geofabrik = "us/mississippi"
+max_zoom = 13
+
+[[pack]]
+id = "us-missouri"
+name = "Missouri"
+parent = "us"
+geofabrik = "us/missouri"
+max_zoom = 13
+
+[[pack]]
+id = "us-montana"
+name = "Montana"
+parent = "us"
+geofabrik = "us/montana"
+max_zoom = 13
+
+[[pack]]
+id = "us-nebraska"
+name = "Nebraska"
+parent = "us"
+geofabrik = "us/nebraska"
+max_zoom = 13
+
+[[pack]]
+id = "us-nevada"
+name = "Nevada"
+parent = "us"
+geofabrik = "us/nevada"
+max_zoom = 13
+
+[[pack]]
+id = "us-new-hampshire"
+name = "New Hampshire"
+parent = "us"
+geofabrik = "us/new-hampshire"
+max_zoom = 13
+
+[[pack]]
+id = "us-new-jersey"
+name = "New Jersey"
+parent = "us"
+geofabrik = "us/new-jersey"
+max_zoom = 13
+
+[[pack]]
+id = "us-new-mexico"
+name = "New Mexico"
+parent = "us"
+geofabrik = "us/new-mexico"
+max_zoom = 13
+
+[[pack]]
+id = "us-new-york"
+name = "New York"
+parent = "us"
+geofabrik = "us/new-york"
+max_zoom = 13
+
+[[pack]]
+id = "us-north-carolina"
+name = "North Carolina"
+parent = "us"
+geofabrik = "us/north-carolina"
+max_zoom = 13
+
+[[pack]]
+id = "us-north-dakota"
+name = "North Dakota"
+parent = "us"
+geofabrik = "us/north-dakota"
+max_zoom = 13
+
+[[pack]]
+id = "us-ohio"
+name = "Ohio"
+parent = "us"
+geofabrik = "us/ohio"
+max_zoom = 13
+
+[[pack]]
+id = "us-oklahoma"
+name = "Oklahoma"
+parent = "us"
+geofabrik = "us/oklahoma"
+max_zoom = 13
+
+[[pack]]
+id = "us-oregon"
+name = "Oregon"
+parent = "us"
+geofabrik = "us/oregon"
+max_zoom = 13
+
+[[pack]]
+id = "us-pennsylvania"
+name = "Pennsylvania"
+parent = "us"
+geofabrik = "us/pennsylvania"
+max_zoom = 13
+
+[[pack]]
 id = "us-puerto-rico"
 name = "Puerto Rico"
 parent = "us"
 geofabrik = "us/puerto-rico"
-# Small enough that z14 is ~10k tiles; the client opens at z14.
 max_zoom = 14
+
+[[pack]]
+id = "us-rhode-island"
+name = "Rhode Island"
+parent = "us"
+geofabrik = "us/rhode-island"
+max_zoom = 13
+
+[[pack]]
+id = "us-south-carolina"
+name = "South Carolina"
+parent = "us"
+geofabrik = "us/south-carolina"
+max_zoom = 13
+
+[[pack]]
+id = "us-south-dakota"
+name = "South Dakota"
+parent = "us"
+geofabrik = "us/south-dakota"
+max_zoom = 13
+
+[[pack]]
+id = "us-tennessee"
+name = "Tennessee"
+parent = "us"
+geofabrik = "us/tennessee"
+max_zoom = 13
+
+[[pack]]
+id = "us-texas"
+name = "Texas"
+parent = "us"
+geofabrik = "us/texas"
+max_zoom = 13
+
+[[pack]]
+id = "us-us-virgin-islands"
+name = "US Virgin Islands"
+parent = "us"
+geofabrik = "us/us-virgin-islands"
+max_zoom = 13
+
+[[pack]]
+id = "us-utah"
+name = "Utah"
+parent = "us"
+geofabrik = "us/utah"
+max_zoom = 13
+
+[[pack]]
+id = "us-vermont"
+name = "Vermont"
+parent = "us"
+geofabrik = "us/vermont"
+max_zoom = 13
+
+[[pack]]
+id = "us-virginia"
+name = "Virginia"
+parent = "us"
+geofabrik = "us/virginia"
+max_zoom = 13
+
+[[pack]]
+id = "us-washington"
+name = "Washington"
+parent = "us"
+geofabrik = "us/washington"
+max_zoom = 13
+
+[[pack]]
+id = "us-west-virginia"
+name = "West Virginia"
+parent = "us"
+geofabrik = "us/west-virginia"
+max_zoom = 13
+
+[[pack]]
+id = "us-wisconsin"
+name = "Wisconsin"
+parent = "us"
+geofabrik = "us/wisconsin"
+max_zoom = 13
+
+[[pack]]
+id = "us-wyoming"
+name = "Wyoming"
+parent = "us"
+geofabrik = "us/wyoming"
+max_zoom = 13
+
+[[pack]]
+id = "bahamas"
+name = "Bahamas"
+parent = "central-america"
+geofabrik = "bahamas"
+max_zoom = 13
+
+[[pack]]
+id = "belize"
+name = "Belize"
+parent = "central-america"
+geofabrik = "belize"
+max_zoom = 13
+
+[[pack]]
+id = "costa-rica"
+name = "Costa Rica"
+parent = "central-america"
+geofabrik = "costa-rica"
+max_zoom = 13
+
+[[pack]]
+id = "cuba"
+name = "Cuba"
+parent = "central-america"
+geofabrik = "cuba"
+max_zoom = 13
+
+[[pack]]
+id = "el-salvador"
+name = "El Salvador"
+parent = "central-america"
+geofabrik = "el-salvador"
+max_zoom = 13
+
+[[pack]]
+id = "guatemala"
+name = "Guatemala"
+parent = "central-america"
+geofabrik = "guatemala"
+max_zoom = 13
+
+[[pack]]
+id = "haiti-and-domrep"
+name = "Haiti and Dominican Republic"
+parent = "central-america"
+geofabrik = "haiti-and-domrep"
+max_zoom = 13
+
+[[pack]]
+id = "honduras"
+name = "Honduras"
+parent = "central-america"
+geofabrik = "honduras"
+max_zoom = 13
+
+[[pack]]
+id = "jamaica"
+name = "Jamaica"
+parent = "central-america"
+geofabrik = "jamaica"
+max_zoom = 13
+
+[[pack]]
+id = "nicaragua"
+name = "Nicaragua"
+parent = "central-america"
+geofabrik = "nicaragua"
+max_zoom = 13
+
+[[pack]]
+id = "panama"
+name = "Panama"
+parent = "central-america"
+geofabrik = "panama"
+max_zoom = 13
+
+[[pack]]
+id = "argentina"
+name = "Argentina"
+parent = "south-america"
+geofabrik = "argentina"
+max_zoom = 13
+
+[[pack]]
+id = "bolivia"
+name = "Bolivia"
+parent = "south-america"
+geofabrik = "bolivia"
+max_zoom = 13
+
+[[pack]]
+id = "chile"
+name = "Chile"
+parent = "south-america"
+geofabrik = "chile"
+max_zoom = 12
+
+[[pack]]
+id = "colombia"
+name = "Colombia"
+parent = "south-america"
+geofabrik = "colombia"
+max_zoom = 13
+
+[[pack]]
+id = "ecuador"
+name = "Ecuador"
+parent = "south-america"
+geofabrik = "ecuador"
+max_zoom = 13
+
+[[pack]]
+id = "guyana"
+name = "Guyana"
+parent = "south-america"
+geofabrik = "guyana"
+max_zoom = 13
+
+[[pack]]
+id = "paraguay"
+name = "Paraguay"
+parent = "south-america"
+geofabrik = "paraguay"
+max_zoom = 13
+
+[[pack]]
+id = "peru"
+name = "Peru"
+parent = "south-america"
+geofabrik = "peru"
+max_zoom = 13
+
+[[pack]]
+id = "suriname"
+name = "Suriname"
+parent = "south-america"
+geofabrik = "suriname"
+max_zoom = 13
+
+[[pack]]
+id = "uruguay"
+name = "Uruguay"
+parent = "south-america"
+geofabrik = "uruguay"
+max_zoom = 13
+
+[[pack]]
+id = "venezuela"
+name = "Venezuela"
+parent = "south-america"
+geofabrik = "venezuela"
+max_zoom = 13
+
+[[pack]]
+id = "brazil-centro-oeste"
+name = "Centro-Oeste"
+parent = "brazil"
+geofabrik = "centro-oeste"
+max_zoom = 13
+
+[[pack]]
+id = "brazil-nordeste"
+name = "Nordeste"
+parent = "brazil"
+geofabrik = "nordeste"
+max_zoom = 13
+
+[[pack]]
+id = "brazil-norte"
+name = "Norte"
+parent = "brazil"
+geofabrik = "norte"
+max_zoom = 13
+
+[[pack]]
+id = "brazil-sudeste"
+name = "Sudeste"
+parent = "brazil"
+geofabrik = "sudeste"
+max_zoom = 13
+
+[[pack]]
+id = "brazil-sul"
+name = "Sul"
+parent = "brazil"
+geofabrik = "sul"
+max_zoom = 13
+
+[[pack]]
+id = "american-oceania"
+name = "American Oceania"
+parent = "oceania"
+geofabrik = "american-oceania"
+max_zoom = 13
+
+[[pack]]
+id = "cook-islands"
+name = "Cook Islands"
+parent = "oceania"
+geofabrik = "cook-islands"
+max_zoom = 13
+
+[[pack]]
+id = "fiji"
+name = "Fiji"
+parent = "oceania"
+geofabrik = "fiji"
+max_zoom = 13
+
+[[pack]]
+id = "ile-de-clipperton"
+name = "Île de Clipperton"
+parent = "oceania"
+geofabrik = "ile-de-clipperton"
+max_zoom = 13
+
+[[pack]]
+id = "kiribati"
+name = "Kiribati"
+parent = "oceania"
+geofabrik = "kiribati"
+max_zoom = 13
+
+[[pack]]
+id = "marshall-islands"
+name = "Marshall Islands"
+parent = "oceania"
+geofabrik = "marshall-islands"
+max_zoom = 13
+
+[[pack]]
+id = "micronesia"
+name = "Micronesia"
+parent = "oceania"
+geofabrik = "micronesia"
+max_zoom = 13
+
+[[pack]]
+id = "nauru"
+name = "Nauru"
+parent = "oceania"
+geofabrik = "nauru"
+max_zoom = 13
+
+[[pack]]
+id = "new-caledonia"
+name = "New Caledonia"
+parent = "oceania"
+geofabrik = "new-caledonia"
+max_zoom = 13
+
+[[pack]]
+id = "new-zealand"
+name = "New Zealand"
+parent = "oceania"
+geofabrik = "new-zealand"
+max_zoom = 12
+
+[[pack]]
+id = "niue"
+name = "Niue"
+parent = "oceania"
+geofabrik = "niue"
+max_zoom = 13
+
+[[pack]]
+id = "palau"
+name = "Palau"
+parent = "oceania"
+geofabrik = "palau"
+max_zoom = 13
+
+[[pack]]
+id = "papua-new-guinea"
+name = "Papua New Guinea"
+parent = "oceania"
+geofabrik = "papua-new-guinea"
+max_zoom = 13
+
+[[pack]]
+id = "pitcairn-islands"
+name = "Pitcairn Islands"
+parent = "oceania"
+geofabrik = "pitcairn-islands"
+max_zoom = 13
+
+[[pack]]
+id = "polynesie-francaise"
+name = "French Polynesia"
+parent = "oceania"
+geofabrik = "polynesie-francaise"
+max_zoom = 13
+
+[[pack]]
+id = "samoa"
+name = "Samoa"
+parent = "oceania"
+geofabrik = "samoa"
+max_zoom = 13
+
+[[pack]]
+id = "solomon-islands"
+name = "Solomon Islands"
+parent = "oceania"
+geofabrik = "solomon-islands"
+max_zoom = 13
+
+[[pack]]
+id = "tokelau"
+name = "Tokelau"
+parent = "oceania"
+geofabrik = "tokelau"
+max_zoom = 13
+
+[[pack]]
+id = "tonga"
+name = "Tonga"
+parent = "oceania"
+geofabrik = "tonga"
+max_zoom = 13
+
+[[pack]]
+id = "tuvalu"
+name = "Tuvalu"
+parent = "oceania"
+geofabrik = "tuvalu"
+max_zoom = 13
+
+[[pack]]
+id = "vanuatu"
+name = "Vanuatu"
+parent = "oceania"
+geofabrik = "vanuatu"
+max_zoom = 13
+
+[[pack]]
+id = "wallis-et-futuna"
+name = "Wallis et Futuna"
+parent = "oceania"
+geofabrik = "wallis-et-futuna"
+max_zoom = 13
+
+[[pack]]
+id = "australia-act"
+name = "Australian Capital Territory"
+parent = "australia"
+geofabrik = "act"
+max_zoom = 13
+
+[[pack]]
+id = "australia-ashmore-cartier"
+name = "Ashmore and Cartier Islands"
+parent = "australia"
+geofabrik = "ashmore-cartier"
+max_zoom = 13
+
+[[pack]]
+id = "australia-christmas-island"
+name = "Christmas Island"
+parent = "australia"
+geofabrik = "christmas-island"
+max_zoom = 13
+
+[[pack]]
+id = "australia-cocos-islands"
+name = "Cocos (Keeling) Islands"
+parent = "australia"
+geofabrik = "cocos-islands"
+max_zoom = 13
+
+[[pack]]
+id = "australia-coral-sea-islands"
+name = "Coral Sea Islands"
+parent = "australia"
+geofabrik = "coral-sea-islands"
+max_zoom = 13
+
+[[pack]]
+id = "australia-heard-mcdonald"
+name = "Heard and McDonald Islands"
+parent = "australia"
+geofabrik = "heard-mcdonald"
+max_zoom = 13
+
+[[pack]]
+id = "australia-new-south-wales"
+name = "New South Wales and ACT"
+parent = "australia"
+geofabrik = "new-south-wales"
+max_zoom = 13
+
+[[pack]]
+id = "australia-norfolk-island"
+name = "Norfolk Island"
+parent = "australia"
+geofabrik = "norfolk-island"
+max_zoom = 13
+
+[[pack]]
+id = "australia-northern-territory"
+name = "Northern Territory"
+parent = "australia"
+geofabrik = "northern-territory"
+max_zoom = 13
+
+[[pack]]
+id = "australia-queensland"
+name = "Queensland"
+parent = "australia"
+geofabrik = "queensland"
+max_zoom = 13
+
+[[pack]]
+id = "australia-south-australia"
+name = "South Australia"
+parent = "australia"
+geofabrik = "south-australia"
+max_zoom = 13
+
+[[pack]]
+id = "australia-tasmania"
+name = "Tasmania"
+parent = "australia"
+geofabrik = "tasmania"
+max_zoom = 13
+
+[[pack]]
+id = "australia-victoria"
+name = "Victoria"
+parent = "australia"
+geofabrik = "victoria"
+max_zoom = 13
+
+[[pack]]
+id = "australia-western-australia"
+name = "Western Australia"
+parent = "australia"
+geofabrik = "western-australia"
+max_zoom = 12

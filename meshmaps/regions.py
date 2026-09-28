@@ -20,6 +20,8 @@ ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 TOP_PACKS_MAX = 4
 GROUPS_WITH_PACKS_MAX = 16
 GROUP_PACKS_MAX = 60
+# mesh-client's MESH_MAP_PACKS_ENTRIES_MAX: the catalog entries it reads.
+PACKS_MAX = 512
 
 
 @dataclass(frozen=True)
@@ -71,6 +73,8 @@ def load(path):
     for item in [*groups.values(), *packs.values()]:
         if item.parent is not None and item.parent not in groups:
             raise RegionError(f"{item.id}: parent {item.parent} is not a group")
+    if len(packs) > PACKS_MAX:
+        raise RegionError(f"{len(packs)} packs; the client reads {PACKS_MAX}")
     per_parent = {}
     for region in packs.values():
         per_parent[region.parent] = per_parent.get(region.parent, 0) + 1

@@ -1,7 +1,7 @@
 PYTHON ?= .venv/bin/python
 FLAVOR ?= light
 
-.PHONY: setup tools assets style check test build catalog publish clean
+.PHONY: setup tools assets style plan check test build catalog publish clean
 
 setup: .venv tools assets style
 
@@ -18,6 +18,10 @@ assets:
 
 style: assets
 	cd style && npm install --silent && node gen.mjs $(FLAVOR)
+
+# regions.toml from regions/plan.toml and Geofabrik's index
+plan: .venv
+	$(PYTHON) -m meshmaps plan
 
 check: .venv
 	$(PYTHON) -m meshmaps check

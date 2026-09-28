@@ -52,9 +52,16 @@ MESHCLIENT_MAP_PACK=$PWD/../meshclient-maps/dist/world/<cut>-light.mctp MESHCLIE
 ## Regions
 
 `regions/regions.toml` is the list: groups (headings in the client's tree) and packs (downloads).
-A pack's outline is a Geofabrik region, whose outlines are the extract boundaries most OSM users
-already know. Only the outline is taken from Geofabrik. Its names and tree are inconsistent
-(`us/washington` has parent `north-america`), so names and parents are written here.
+It is written by `make plan` from `regions/plan.toml` and Geofabrik's index, and committed; edit
+the plan, not the list. A pack's outline is a Geofabrik region, whose outlines are the extract
+boundaries most OSM users already know. Only the outline is taken from Geofabrik.
+
+The plan lists every country under Geofabrik's continents. A country whose tiles to z13 fit the
+budget (400,000, about 1.3 GB) is one pack; one that does not and that Geofabrik subdivides
+becomes a group of its subdivisions (China, Canada, the US, Brazil, Australia, Norway); one that
+cannot be split is drawn shallower, down to z10. `make plan` prints which went which way.
+Unions Geofabrik also lists (`dach`, `britain-and-ireland`, the US census regions) are excluded
+so no place is two packs.
 
 An `id` is permanent: it is the pack's path on R2 and how the client recognises an installed
 pack when a newer cut appears.
@@ -93,8 +100,12 @@ make publish REGION=us-washington
 sidecar in the bucket, so publishing one region never drops another. See
 [`docs/catalog.md`](docs/catalog.md) for the layout and the contract the client reads.
 
-The **Build packs** workflow does the same on GitHub Actions for the regions it is given, and
-needs the three `R2_*` values as repository secrets.
+The **Build packs** workflow does the same on GitHub Actions, and needs the three `R2_*` values
+as repository secrets. Given `all`, or run by its monthly schedule, it spreads every region over
+40 jobs balanced by estimated tiles (`meshmaps shards`), 20 at a time, all drawn from one planet
+build. Each job uploads its packs without touching the catalog, and a last job rebuilds it once
+(`meshmaps publish-catalog`), so jobs never race to write it. It does not prune: the old cuts
+are removed by hand with `prune`.
 
 ## Licences
 

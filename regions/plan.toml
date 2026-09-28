@@ -1,0 +1,93 @@
+# What `meshmaps plan` turns into regions.toml. Edit this, then run `make plan`; regions.toml is
+# written from it and Geofabrik's index, and is committed so a build never depends on the index
+# having stayed the same.
+#
+# The rule: every region under a continent below is one pack, drawn as deep as `max_zoom` if its
+# tiles fit `budget_tiles`. A region that does not fit and that Geofabrik subdivides becomes a
+# group of its subdivisions instead (one level). One that does not fit and cannot be split is
+# drawn shallower, down to `min_zoom`; below that it is left to the world base.
+
+budget_tiles = 400000   # every zoom of one pack; ~1.3 GB at the ~3.3 KB a tile packs measure
+max_zoom = 13
+min_zoom = 10           # the world base goes to 8 and is enlarged to 12 before it gives out
+
+# Regions that overlap others Geofabrik also lists: unions of two countries already there, the
+# US census regions, the US as a whole (its states are listed instead).
+exclude = [
+    "alps", "britain-and-ireland", "dach", "great-britain",
+    "south-africa-and-lesotho", "sea",
+    "us-midwest", "us-northeast", "us-pacific", "us-south", "us-west",
+]
+
+# The top of the tree: packs that belong to no group. A map stack draws them under every region.
+[[top]]
+id = "world"
+name = "World"
+max_zoom = 8
+
+# Geofabrik's continents, in the order the client lists them. A split country's group follows
+# its continent.
+[[continent]]
+geofabrik = "africa"
+id = "africa"
+name = "Africa"
+
+[[continent]]
+geofabrik = "asia"
+id = "asia"
+name = "Asia"
+
+[[continent]]
+geofabrik = "europe"
+id = "europe"
+name = "Europe"
+
+[[continent]]
+geofabrik = "russia"
+id = "russia"
+name = "Russia"
+# Geofabrik files Russia as a continent of its own; its federal districts are its packs.
+
+[[continent]]
+geofabrik = "north-america"
+id = "north-america"
+name = "North America"
+
+[[continent]]
+geofabrik = "central-america"
+id = "central-america"
+name = "Central America"
+
+[[continent]]
+geofabrik = "south-america"
+id = "south-america"
+name = "South America"
+
+[[continent]]
+geofabrik = "australia-oceania"
+id = "oceania"
+name = "Australia and Oceania"
+
+# Subdivided by id prefix rather than parent: Geofabrik files the US states under North America
+# as `us/<state>`, beside the `us` region.
+[split_by_prefix]
+us = { id = "us", name = "United States" }
+
+# Names Geofabrik spells as a path, or longer than the 31 bytes a pack header holds. Keyed by
+# Geofabrik id.
+[names]
+"saint-helena-ascension-and-tristan-da-cunha" = "St Helena, Ascension, Tristan"
+"us/district-of-columbia" = "District of Columbia"
+"us/us-virgin-islands" = "US Virgin Islands"
+"congo-democratic-republic" = "DR Congo"
+"congo-brazzaville" = "Congo"
+"ireland-and-northern-ireland" = "Ireland and Northern Ireland"
+"hebei" = "Hebei, Beijing, Tianjin"
+"guangdong" = "Guangdong, Hong Kong, Macau"
+"polynesie-francaise" = "French Polynesia"
+"heard-mcdonald" = "Heard and McDonald Islands"
+"new-south-wales" = "New South Wales and ACT"
+
+# Deeper than max_zoom, where a small region is worth it. Keyed by Geofabrik id.
+[zoom]
+"us/puerto-rico" = 14
