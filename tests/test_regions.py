@@ -44,5 +44,21 @@ class Regions(unittest.TestCase):
             )
 
 
+    def test_refuses_a_group_the_client_cannot_show(self):
+        text = '[[group]]\nid = "us"\nname = "US"\n'
+        for i in range(regions.GROUP_PACKS_MAX + 1):
+            text += f'[[pack]]\nid = "us-{i}"\nname = "S{i}"\nparent = "us"\nmax_zoom = 13\n'
+        with self.assertRaisesRegex(regions.RegionError, "us holds"):
+            self.load_text(text)
+
+    def test_refuses_more_top_packs_than_the_client_shows(self):
+        text = "".join(
+            f'[[pack]]\nid = "top-{i}"\nname = "T{i}"\nmax_zoom = 6\n'
+            for i in range(regions.TOP_PACKS_MAX + 1)
+        )
+        with self.assertRaisesRegex(regions.RegionError, "at the top"):
+            self.load_text(text)
+
+
 if __name__ == "__main__":
     unittest.main()

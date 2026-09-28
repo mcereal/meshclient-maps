@@ -13,6 +13,14 @@ from . import http, mctp
 GEOFABRIK_INDEX = "https://download.geofabrik.de/index-v1.json"
 ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
+# What mesh-client's Settings > Maps can show. It lists the packs at the top of the tree and one row
+# per group on its first screen, and a group's packs on a screen of their own, inside a section of
+# at most 64 rows - so a catalog past these would have packs nobody could reach. See
+# docs/catalog.md.
+TOP_PACKS_MAX = 4
+GROUPS_WITH_PACKS_MAX = 16
+GROUP_PACKS_MAX = 60
+
 
 @dataclass(frozen=True)
 class Group:
@@ -63,6 +71,17 @@ def load(path):
     for item in [*groups.values(), *packs.values()]:
         if item.parent is not None and item.parent not in groups:
             raise RegionError(f"{item.id}: parent {item.parent} is not a group")
+    per_parent = {}
+    for region in packs.values():
+        per_parent[region.parent] = per_parent.get(region.parent, 0) + 1
+    if per_parent.get(None, 0) > TOP_PACKS_MAX:
+        raise RegionError(f"{per_parent[None]} packs at the top; the client shows {TOP_PACKS_MAX}")
+    with_packs = [parent for parent in per_parent if parent is not None]
+    if len(with_packs) > GROUPS_WITH_PACKS_MAX:
+        raise RegionError(f"{len(with_packs)} groups hold packs; the client shows {GROUPS_WITH_PACKS_MAX}")
+    for parent in with_packs:
+        if per_parent[parent] > GROUP_PACKS_MAX:
+            raise RegionError(f"{parent} holds {per_parent[parent]} packs; the client shows {GROUP_PACKS_MAX}")
     for group in groups.values():
         seen = set()
         at = group

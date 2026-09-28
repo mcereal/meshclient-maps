@@ -72,6 +72,12 @@ before a new cut was published can still finish.
 Packs are listed sorted by `(id, style)`. A client builds its own tree from `parent`, not from
 the order.
 
+mesh-client shows the packs at the top of the tree and one row per group that holds packs, and a
+group's packs on a screen of their own. Its screens are bounded, so `regions.toml` is too, and
+`meshmaps check` refuses more than: 4 packs at the top, 16 groups holding packs, 60 packs in one
+group. A region list that grows past these splits a group (`us-west`, `us-east`) rather than
+raising them.
+
 ## What a client should do
 
 - Fetch `catalog.json` when the download screen opens, not on a timer.
