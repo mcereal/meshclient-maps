@@ -29,6 +29,8 @@ PLANET_BASE = "https://build.protomaps.com/"
 
 # The planet's own deepest zoom. Anything deeper is drawn by overzooming z15 data.
 PLANET_MAX_ZOOM = 15
+EXTRACT_ATTEMPTS = 4
+EXTRACT_BACKOFF_S = 60
 
 TILESERVER_IMAGE = "maptiler/tileserver-gl:v5.6.0"
 
@@ -84,7 +86,18 @@ def extract(root, planet_url, region_geojson, max_zoom, output):
         command.append("--bbox=-180,-85.05,180,85.05")
     else:
         command.append(f"--region={region_geojson}")
-    subprocess.run(command, check=True)
+    # build.protomaps.com resets streams when many readers pull at once - a monthly run is 10 of
+    # them - and an extract cannot resume, so a failed one is started again after a pause.
+    for attempt in range(EXTRACT_ATTEMPTS):
+        try:
+            subprocess.run(command, check=True)
+            break
+        except subprocess.CalledProcessError:
+            if attempt + 1 == EXTRACT_ATTEMPTS:
+                raise
+            pause = EXTRACT_BACKOFF_S * 2**attempt
+            print(f"  extract failed; trying again in {pause}s ({attempt + 2}/{EXTRACT_ATTEMPTS})", flush=True)
+            time.sleep(pause)
     os.replace(output + ".part", output)
 
 
