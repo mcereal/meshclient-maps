@@ -12,8 +12,9 @@ if [ -x "$dest/pmtiles" ] && "$dest/pmtiles" version 2>/dev/null | grep -q "$PMT
 fi
 
 case "$(uname -s)" in
-    Darwin) os=Darwin; ext=zip ;;
-    Linux) os=Linux; ext=tar.gz ;;
+    # The two platforms' assets are not named alike: "go-pmtiles-" on macOS, "go-pmtiles_" on Linux.
+    Darwin) os=Darwin; ext=zip; sep=- ;;
+    Linux) os=Linux; ext=tar.gz; sep=_ ;;
     *) echo "fetch-tools: unsupported OS $(uname -s)" >&2; exit 1 ;;
 esac
 case "$(uname -m)" in
@@ -22,7 +23,7 @@ case "$(uname -m)" in
     *) echo "fetch-tools: unsupported CPU $(uname -m)" >&2; exit 1 ;;
 esac
 
-url="https://github.com/protomaps/go-pmtiles/releases/download/v$PMTILES_VERSION/go-pmtiles-${PMTILES_VERSION}_${os}_${arch}.$ext"
+url="https://github.com/protomaps/go-pmtiles/releases/download/v$PMTILES_VERSION/go-pmtiles${sep}${PMTILES_VERSION}_${os}_${arch}.$ext"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 curl -fsSL -o "$tmp/pmtiles.$ext" "$url"
