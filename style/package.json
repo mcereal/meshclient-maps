@@ -1,0 +1,11 @@
+{
+  "name": "meshclient-maps-style",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "node gen.mjs"
+  },
+  "dependencies": {
+    "@protomaps/basemaps": "5.7.2"
+  }
+}

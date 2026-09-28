@@ -1,0 +1,62 @@
+name: Build packs
+
+# Draws the regions asked for and publishes them. By hand for now: a scheduled rebuild of every
+# region is a later decision, since it is where the time and bucket space go.
+on:
+  workflow_dispatch:
+    inputs:
+      regions:
+        description: "Region ids, space separated (see regions/regions.toml)"
+        required: true
+        default: "world"
+      publish:
+        description: "Upload to R2 and rebuild the catalog"
+        type: boolean
+        default: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      regions: ${{ steps.list.outputs.regions }}
+    steps:
+      - id: list
+        env:
+          REGIONS: ${{ inputs.regions }}
+        run: |
+          echo "regions=$(printf '%s\n' $REGIONS | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      # One at a time: every job rebuilds the catalog from the bucket after its upload, and
+      # running them in sequence means the last one sees everything.
+      max-parallel: 1
+      matrix:
+        region: ${{ fromJson(needs.plan.outputs.regions) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - run: make setup
+      - run: make build REGION=${{ matrix.region }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !inputs.publish }}
+        with:
+          name: ${{ matrix.region }}
+          path: dist/${{ matrix.region }}/
+          retention-days: 7
+      - if: ${{ inputs.publish }}
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ vars.R2_BUCKET || 'meshclient-maps' }}
+        run: make publish REGION=${{ matrix.region }}

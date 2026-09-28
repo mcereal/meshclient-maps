@@ -1,0 +1,80 @@
+# What the pipeline builds, and the tree the client's download screen shows.
+#
+# A [[group]] is a heading in that tree and has no pack. A [[pack]] is one download.
+#
+#   id         stable forever: it is the pack's path on R2 and the key the client remembers
+#              an installed pack by. Lowercase, digits and hyphens.
+#   name       what the client shows; at most 31 bytes of UTF-8, the pack header's limit.
+#   parent     a group id, or omitted for the top of the tree.
+#   geofabrik  the Geofabrik region whose outline cuts the pack (download.geofabrik.de).
+#              Omitted for the world base, which is every tile.
+#   max_zoom   how far in the pack goes. 13 for a state or country; see README "Zoom and size".
+#
+# Group ids are part of the catalog contract too - a client may remember which one was open.
+
+[[group]]
+id = "north-america"
+name = "North America"
+
+[[group]]
+id = "us"
+name = "United States"
+parent = "north-america"
+
+[[group]]
+id = "europe"
+name = "Europe"
+
+[[pack]]
+id = "world"
+name = "World"
+max_zoom = 6
+
+[[pack]]
+id = "us-washington"
+name = "Washington"
+parent = "us"
+geofabrik = "us/washington"
+max_zoom = 13
+
+[[pack]]
+id = "us-oregon"
+name = "Oregon"
+parent = "us"
+geofabrik = "us/oregon"
+max_zoom = 13
+
+[[pack]]
+id = "us-california"
+name = "California"
+parent = "us"
+geofabrik = "us/california"
+max_zoom = 13
+
+[[pack]]
+id = "us-texas"
+name = "Texas"
+parent = "us"
+geofabrik = "us/texas"
+max_zoom = 13
+
+[[pack]]
+id = "us-colorado"
+name = "Colorado"
+parent = "us"
+geofabrik = "us/colorado"
+max_zoom = 13
+
+[[pack]]
+id = "germany"
+name = "Germany"
+parent = "europe"
+geofabrik = "germany"
+max_zoom = 13
+
+[[pack]]
+id = "united-kingdom"
+name = "United Kingdom"
+parent = "europe"
+geofabrik = "united-kingdom"
+max_zoom = 13
